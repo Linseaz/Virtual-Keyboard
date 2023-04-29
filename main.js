@@ -121,3 +121,11 @@ function clickKey(event) {
     input.selectionEnd = temp + 1;
   }
 }
+
+function capsLock(event) {
+  if (event.target.textContent === '⇪ Caps') {
+    if (keyCase === 'basic') keyCase = 'caps';
+    else keyCase = 'basic';
+    renderKeySymbol();
+  }
+}
