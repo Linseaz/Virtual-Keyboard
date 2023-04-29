@@ -3,7 +3,7 @@ import keys from './data.js';
 
 let language = localStorage.getItem('language');
 if (language === null) language = 'english';
-const keyCase = 'basic';
+let keyCase = 'basic';
 
 const body = document.querySelector('body');
 
@@ -129,3 +129,20 @@ function capsLock(event) {
     renderKeySymbol();
   }
 }
+
+function shift(event) {
+  if (event.target.textContent === '⇧ Shift') {
+    if (keyCase === 'basic') keyCase = 'shift';
+    if (keyCase === 'caps') keyCase = 'capsShift';
+    if (event.type === 'mouseup' && keyCase === 'shift') keyCase = 'basic';
+    if (event.type === 'mouseup' && keyCase === 'capsShift') keyCase = 'caps';
+    renderKeySymbol();
+  }
+}
+
+wrapper.addEventListener('mousedown', (event) => clickKey(event));
+wrapper.addEventListener('mousedown', shift);
+wrapper.addEventListener('mouseup', shift);
+wrapper.addEventListener('mousedown', (event) => capsLock(event));
+wrapper.addEventListener('mousedown', shift);
+wrapper.addEventListener('mouseup', shift);
