@@ -205,6 +205,27 @@ function realKeyboardDown(event) {
   input.focus();
 }
 
+function realKeyboardUp(event) {
+  const key = document.getElementById(`${event.code}`);
+  if (key === null) return;
+
+  setTimeout(() => {
+    if (event.type === 'keyup' && key.id !== 'CapsLock') key.classList.remove('active');
+  }, 250);
+
+  if (key.id === 'CapsLock' && (keyCase === 'caps' || keyCase === 'capsShift')) {
+    key.classList.add('active');
+  } else if (key.id === 'CapsLock' && (keyCase !== 'caps' || keyCase !== 'capsShift')) {
+    key.classList.remove('active');
+  }
+
+  if (key.textContent === '⇧ Shift') {
+    if (event.type === 'keyup' && keyCase === 'shift') keyCase = 'basic';
+    if (event.type === 'keyup' && keyCase === 'capsShift') keyCase = 'caps';
+    renderKeySymbol();
+  }
+}
+
 wrapper.addEventListener('mousedown', (event) => clickKey(event));
 wrapper.addEventListener('mousedown', shift);
 wrapper.addEventListener('mouseup', shift);
@@ -213,6 +234,7 @@ wrapper.addEventListener('mousedown', shift);
 wrapper.addEventListener('mouseup', shift);
 
 window.addEventListener('keydown', realKeyboardDown);
+window.addEventListener('keyup', realKeyboardUp);
 window.addEventListener('keydown', (event) => event.preventDefault());
 
 wrapper.addEventListener('keydown', clickKey); // ??
