@@ -1,0 +1,85 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Inika', serif;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.key {
+  height: 25px;
+  width: 20px;
+  border: solid 2px black;
+  text-align: center;
+  padding: 5px 15px 5px 15px;
+  font-size: 1em;
+  user-select: none;
+}
+
+.wrapper-keys {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 844px;
+}
+
+.text {
+  margin-top: 50px;
+  width: 700px;
+  text-align: center;
+}
+
+#alert {
+  background: #fefefe;
+  width: 839px;
+  height: 200px;
+  margin-top: 30px;
+  font-size: 20px;
+  outline: black solid 2px;
+}
+
+#Space {
+  width: 359px;
+}
+
+#ShiftLeft {
+  width: 97px;
+}
+
+#ShiftRight {
+  width: 85px;
+}
+
+#Enter {
+  width: 107px;
+}
+
+#Delete {
+  width: 24px;
+}
+
+#Tab {
+  width: 50px;
+}
+
+#CapsLock {
+  width: 75px;
+}
+
+#Backspace {
+  width: 108px;
+}
+
+#ControlLeft {
+  width: 28px;
+}
+
+#ControlRight {
+  width: 31px;
+}
+
+.active {
+  background-color: green;
+  color: white;
+}
