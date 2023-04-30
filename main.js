@@ -213,3 +213,6 @@ wrapper.addEventListener('mousedown', shift);
 wrapper.addEventListener('mouseup', shift);
 
 window.addEventListener('keydown', realKeyboardDown);
+window.addEventListener('keydown', (event) => event.preventDefault());
+
+wrapper.addEventListener('keydown', clickKey); // ??
