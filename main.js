@@ -238,3 +238,8 @@ window.addEventListener('keyup', realKeyboardUp);
 window.addEventListener('keydown', (event) => event.preventDefault());
 
 wrapper.addEventListener('keydown', clickKey); // ??
+
+const keyboard = document.querySelector('.wrapper-keys');
+keyboard.addEventListener('click', () => {
+  input.focus();
+});
