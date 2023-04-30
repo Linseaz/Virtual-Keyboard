@@ -140,9 +140,76 @@ function shift(event) {
   }
 }
 
+function realKeyboardDown(event) {
+  const temp = input.selectionStart;
+  const key = document.getElementById(`${event.code}`);
+  if (key === null) return;
+  if ((key.id === 'AltLeft' && event.ctrlKey === true)
+    || (key.id === 'ControlLeft' && event.altKey === true)) toggleLanguage();
+
+  if (key.textContent === '⇧ Shift'
+    || key.textContent === 'Alt'
+    || key.textContent === 'Win'
+    || key.textContent === 'Ctrl') {
+    input.value += '';
+  } else if (key.textContent === '⇪ Caps') {
+    if (keyCase === 'basic') keyCase = 'caps';
+    else keyCase = 'basic';
+    renderKeySymbol();
+  } else if (key.textContent === '↵ Enter') {
+    input.value = `${input.value.slice(0, input.selectionStart)}\n${input.value.slice(input.selectionStart)}`;
+    input.selectionEnd = temp + 1;
+  } else if (key.textContent === 'Space') {
+    if (temp === 0) {
+      input.value = ` ${input.value}`;
+      input.selectionEnd = temp + 1;
+    } else {
+      input.value = `${input.value.slice(0, input.selectionStart)} ${input.value.slice(input.selectionStart)}`;
+      input.selectionEnd = temp + 1;
+    }
+  } else if (key.textContent === '↹ Tab') {
+    if (temp === 0) {
+      input.value = `    ${input.value}`;
+      input.selectionEnd = temp + 4;
+    } else {
+      input.value = `${input.value.slice(0, input.selectionStart)}    ${input.value.slice(input.selectionStart)}`;
+      input.selectionEnd = temp + 4;
+    }
+  } else if (key.textContent === '⌫ Backspace') {
+    if (input.selectionStart === input.selectionEnd) {
+      if (input.selectionStart === 0) return;
+      input.value = input.value.slice(0, input.selectionStart - 1)
+        + input.value.slice(input.selectionStart);
+      input.selectionEnd = temp - 1;
+    } else {
+      input.value = input.value.slice(0, input.selectionStart)
+        + input.value.slice(input.selectionEnd);
+      input.selectionEnd = temp;
+    }
+  } else if (key.textContent === 'Del') {
+    input.value = input.value.slice(0, input.selectionStart)
+      + input.value.slice(input.selectionStart + 1);
+    input.selectionEnd = temp;
+  } else {
+    input.value = `${input.value.slice(0, input.selectionStart)}${key.textContent}${input.value.slice(input.selectionStart)}`;
+    input.selectionEnd = temp + 1;
+  }
+
+  key.classList.add('active');
+
+  if (key.textContent === '⇧ Shift') {
+    if (keyCase === 'basic') keyCase = 'shift';
+    if (keyCase === 'caps') keyCase = 'capsShift';
+    renderKeySymbol();
+  }
+  input.focus();
+}
+
 wrapper.addEventListener('mousedown', (event) => clickKey(event));
 wrapper.addEventListener('mousedown', shift);
 wrapper.addEventListener('mouseup', shift);
 wrapper.addEventListener('mousedown', (event) => capsLock(event));
 wrapper.addEventListener('mousedown', shift);
 wrapper.addEventListener('mouseup', shift);
+
+window.addEventListener('keydown', realKeyboardDown);
